@@ -34,12 +34,8 @@ async def on_ready() -> None:
     )
 
 
-def clean_cog_name(cog: str):
-    return cog.replace("/", ".").replace("\\", ".").replace(".py", "")
-
-
 if __name__ == "__main__":
-    for cog in glob.iglob(os.path.join("cogs", "**", "[!^_]*.py"), root_dir=os.path.dirname(__file__), recursive=True):
-        bot.load_extension(clean_cog_name(cog))
     database.Database().setup()
+    for cog in glob.iglob(os.path.join("cogs", "**", "[!^_]*.py"), root_dir=os.path.dirname(__file__), recursive=True):
+        bot.load_extension(cog.replace("/", ".").replace("\\", ".").replace(".py", ""))
     bot.run(config["bot"]["token"])
